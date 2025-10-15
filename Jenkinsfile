@@ -1,6 +1,6 @@
 def appName = 'my-python-app' // Must match your AWS ECR repo name
 def awsAccountId = '708972351530' // e.g., 123456789012
-def awsRegion = 'us-east-1' 
+def awsRegion = 'ap-south-1' 
 def credentialsId = 'my-aws-iam-keys' // Your Jenkins credential ID
 
 pipeline {
