@@ -44,10 +44,15 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 echo "Pushing image to ECR: ${ECR_REPO}:${IMAGE_TAG}"
-                // Pushing is done implicitly in the build step, but we also push the 'latest' tag for convenience
-                script {
-                    docker.image("${ECR_REPO}:${IMAGE_TAG}").withTag("latest").push()
-                }
+        
+                // 1. Tag the image with the 'latest' tag using the bat step
+                bat "docker tag ${ECR_REPO}:${IMAGE_TAG} ${ECR_REPO}:latest"
+        
+                echo "Tagged image as latest. Now pushing both tags..."
+                
+                // 2. Push the 'latest' tag
+                bat "docker push ${ECR_REPO}:latest"
+        
                 echo "Deployment image ${ECR_REPO}:${IMAGE_TAG} pushed successfully!"
             }
         }
